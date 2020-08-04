@@ -54,6 +54,7 @@ ARG JANUS_BUILD_DEPS_EXT="\
     cmake \
     ca-certificates \
     curl \
+    libconfig \
     "
 
 RUN \
