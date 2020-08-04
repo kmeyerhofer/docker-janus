@@ -41,6 +41,7 @@ ARG JANUS_BUILD_DEPS_DEV="\
     libogg-dev \
     liblua5.3-dev \
     pkg-config \
+    libconfig-dev \
     "
 ARG JANUS_BUILD_DEPS_EXT="\
     libavutil-dev \
@@ -54,7 +55,6 @@ ARG JANUS_BUILD_DEPS_EXT="\
     cmake \
     ca-certificates \
     curl \
-    libconfig \
     "
 
 RUN \
