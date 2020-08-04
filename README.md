@@ -1,5 +1,5 @@
 # docker-janus
-`docker-janus` is a Debian 8 based docker image for [Meetecho's Janus Gateway](https://github.com/meetecho/janus-gateway)
+`docker-janus` is a Debian 9 based docker image for [Meetecho's Janus Gateway](https://github.com/meetecho/janus-gateway)
 
 ## Description
 All the janus docker builds I have seen in hub.docker.com were all ubuntu based and/or of some redhat flavor. I successfully build janus in debian 7 and 8 before, so I thought it would be a good way to practice docker best practices and provide a debian based image at the same time.
@@ -17,7 +17,7 @@ Many thanks for [meetecho](http://www.meetecho.com) for providing us [Janus Gate
 
 I have tried to build the image with docker best practices at hand. Should there be anything of note you notices, please do not hesitate to leave a comment!
 
-## quickstart 
+## quickstart
 ```
 root@mcroth:~/sandbox# git clone https://github.com/krull/docker-janus.git
 Cloning into 'docker-janus'...
@@ -40,16 +40,16 @@ Creating janus-gateway
 root@mcroth:~/sandbox/docker-janus# docker-compose ps
     Name              Command          State                       Ports                      
 ---------------------------------------------------------------------------------------------
-janus-gateway   /opt/janus/bin/janus   Up      0.0.0.0:8088->8088/tcp, 0.0.0.0:8188->8188/tcp 
+janus-gateway   /opt/janus/bin/janus   Up      0.0.0.0:8088->8088/tcp, 0.0.0.0:8188->8188/tcp
 root@mcroth:~/sandbox/docker-janus# docker images
 REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
 mcroth/docker-janus   latest              1dd697edcb76        23 minutes ago      232.9 MB
-root@mcroth:~/sandbox/docker-janus# 
+root@mcroth:~/sandbox/docker-janus#
 ```
 
 Visiting `http://localhost:8088/janus/info` in your browser should provide you with the build info of janus in JSON format.
 
-A full set of default janus config files are in `./janus` folder, which is referenced as a volume in the `docker-compose.yml` file for docker-compose to use. 
+A full set of default janus config files are in `./janus` folder, which is referenced as a volume in the `docker-compose.yml` file for docker-compose to use.
 
 ## build criteria
 `janus-gateway` is built with the following configured options disabled, as I do not have the need for them to be enabled by default:
