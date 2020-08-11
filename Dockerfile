@@ -87,7 +87,7 @@ RUN \
     && curl -fSL https://github.com/cisco/libsrtp/archive/v2.1.0.tar.gz -o ${BUILD_SRC}/v2.1.0.tar.gz \
     && tar xzf ${BUILD_SRC}/v2.1.0.tar.gz -C ${BUILD_SRC} \
     && cd ${BUILD_SRC}/libsrtp-2.1.0 \
-    && ./configure --prefix=/usr --enable-openssl --libdir=/usr/lib64 \
+    && ./configure --prefix=/usr --enable-openssl \
     && make shared_library \
     && make install \
 # build boringssl
