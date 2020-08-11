@@ -4,7 +4,7 @@
 ############################################################
 
 # set base image debian jessie
-FROM debian:stretch
+FROM debian:buster
 
 # file maintainer author
 MAINTAINER brendan jocson <brendan@jocson.eu>
