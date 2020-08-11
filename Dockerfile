@@ -143,8 +143,8 @@ RUN \
     && tar xzf ${BUILD_SRC}/v1.8.19.tar.gz -C ${BUILD_SRC} \
     && cd ${BUILD_SRC}/doxygen-Release_1_8_19 \
     && mkdir build \
-    && cmake -G "Unix Makefiles" ..
-    && make
+    && cmake -G "Unix Makefiles" .. \
+    && make \
     && make install \
     ; fi \
 # build janus-gateway
