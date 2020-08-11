@@ -73,7 +73,7 @@ RUN \
     && export JANUS_CONFIG_OPTIONS="${JANUS_CONFIG_OPTIONS}"\
     && if [ $JANUS_WITH_POSTPROCESSING = "1" ]; then export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --enable-post-processing"; fi \
     && if [ $JANUS_WITH_BORINGSSL = "1" ]; then export JANUS_BUILD_DEPS_DEV="$JANUS_BUILD_DEPS_DEV golang-go" && export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --enable-boringssl --enable-dtls-settimeout"; fi \
-    && if [ $JANUS_WITH_DOCS = "1" ]; then export JANUS_BUILD_DEPS_DEV="$JANUS_BUILD_DEPS_DEV doxygen graphviz" && export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --enable-docs"; fi \
+    && if [ $JANUS_WITH_DOCS = "1" ]; then export JANUS_BUILD_DEPS_DEV="$JANUS_BUILD_DEPS_DEV graphviz" && export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --enable-docs"; fi \
     && if [ $JANUS_WITH_REST = "1" ]; then export JANUS_BUILD_DEPS_DEV="$JANUS_BUILD_DEPS_DEV libmicrohttpd-dev"; else export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --disable-rest"; fi \
     && if [ $JANUS_WITH_DATACHANNELS = "0" ]; then export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --disable-data-channels"; fi \
     && if [ $JANUS_WITH_WEBSOCKETS = "0" ]; then export JANUS_CONFIG_OPTIONS="$JANUS_CONFIG_OPTIONS --disable-websockets"; fi \
@@ -136,6 +136,15 @@ RUN \
     && autoreconf -i \
     && ./configure --prefix=/usr \
     && make \
+    && make install \
+    ; fi \
+# build doxygen
+    && if [ $JANUS_WITH_DOCS = "1" ]; then curl -fSL https://github.com/doxygen/doxygen/archive/Release_1_8_19.tar.gz -o ${BUILD_SRC}/v1.8.19.tar.gz \
+    && tar xzf ${BUILD_SRC}/v1.8.19.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/doxygen-Release_1_8_19 \
+    && mkdir build \
+    && cmake -G "Unix Makefiles" ..
+    && make
     && make install \
     ; fi \
 # build janus-gateway
