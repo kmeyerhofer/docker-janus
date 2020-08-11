@@ -87,7 +87,7 @@ RUN \
     && curl -fSL https://github.com/cisco/libsrtp/archive/v2.1.0.tar.gz -o ${BUILD_SRC}/v2.1.0.tar.gz \
     && tar xzf ${BUILD_SRC}/v2.1.0.tar.gz -C ${BUILD_SRC} \
     && cd ${BUILD_SRC}/libsrtp-2.1.0 \
-    && ./configure --prefix=/usr --enable-openssl \
+    && ./configure --prefix=/usr --enable-openssl --libdir=/usr/lib64 \
     && make shared_library \
     && make install \
 # build boringssl
@@ -146,7 +146,7 @@ RUN \
     && ./configure ${JANUS_CONFIG_DEPS} $JANUS_CONFIG_OPTIONS \
     && make \
     && make install \
-#    && make configs \
+    && make configs \
 # folder ownership
     && chown -R janus:janus /opt/janus \
 # build cleanup
