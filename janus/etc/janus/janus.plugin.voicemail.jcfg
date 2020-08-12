@@ -5,7 +5,7 @@
 # events = true|false, whether events should be sent to event handlers
 
 general: {
-	path = "@demosdir@/voicemail/"
+	path = "/opt/janus/share/janus/demos/voicemail/"
 	base = "/voicemail/"
 	events = true
 }
