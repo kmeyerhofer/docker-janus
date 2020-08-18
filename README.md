@@ -1,17 +1,8 @@
 # docker-janus
-`docker-janus` is a Debian 9 based docker image for [Meetecho's Janus Gateway](https://github.com/meetecho/janus-gateway)
+`docker-janus` is a Debian 10 (buster) based docker image for [Meetecho's Janus Gateway](https://github.com/meetecho/janus-gateway)
 
 ## Description
 All the janus docker builds I have seen in hub.docker.com were all ubuntu based and/or of some redhat flavor. I successfully build janus in debian 7 and 8 before, so I thought it would be a good way to practice docker best practices and provide a debian based image at the same time.
-
-For the automated build go to [hub.docker.com](https://hub.docker.com/r/mcroth/docker-janus/)
-
-You can use this image directly from [hub.docker.com](https://hub.docker.com/r/mcroth/docker-janus/) by issuing the following docker commands:
-```
-docker pull mcroth/docker-janus:latest
-```
-
-UPDATE: Added a new branch with `tklx/base` as the build image which drastically reduces the docker image size. Both `latest` and `tklx` tags are available from the [hub](https://hub.docker.com/r/mcroth/docker-janus/).
 
 Many thanks for [meetecho](http://www.meetecho.com) for providing us [Janus Gateway](https://github.com/meetecho/janus-gateway)!
 
