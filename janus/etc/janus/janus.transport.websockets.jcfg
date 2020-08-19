@@ -7,7 +7,7 @@ general: {
 	#pingpong_trigger = 30			# After how many seconds of idle, a PING should be sent
 	#pingpong_timeout = 10			# After how many seconds of not getting a PONG, a timeout should be detected
 
-	ws = true						# Whether to enable the WebSockets API
+	ws = false						# Whether to enable the WebSockets API
 	ws_port = 8188					# WebSockets server port
 	#ws_interface = "eth0"			# Whether we should bind this server to a specific interface only
 	#ws_ip = "192.168.0.1"			# Whether we should bind this server to a specific IP address only
@@ -42,8 +42,8 @@ admin: {
 # 'ciphers' property accordingly (no limitation by default).
 # Examples of recommended cipher strings at https://cheatsheetseries.owasp.org/cheatsheets/TLS_Cipher_String_Cheat_Sheet.html
 certificates: {
-	#cert_pem = "/path/to/cert.pem"
-	#cert_key = "/path/to/key.pem"
+	cert_pem = "/opt/janus/share/janus/certs/mycert.pem"
+	cert_key = "/opt/janus/share/janus/certs/mykey.pem"
 	#cert_pwd = "secretpassphrase"
 	#ciphers = "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256"
 }
