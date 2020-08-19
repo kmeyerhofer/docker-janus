@@ -23,7 +23,7 @@ ARG JANUS_WITH_WEBSOCKETS="1"
 ARG JANUS_WITH_MQTT="0"
 ARG JANUS_WITH_PFUNIX="1"
 ARG JANUS_WITH_RABBITMQ="0"
-# https://goo.gl/dmbvc1
+# https://groups.google.com/d/msg/meetecho-janus/QX-VEoIdlLE/YVS99Am5BAAJ
 ARG JANUS_WITH_FREESWITCH_PATCH="0"
 ARG JANUS_CONFIG_DEPS="\
     --prefix=/opt/janus \
