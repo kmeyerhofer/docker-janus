@@ -94,7 +94,8 @@ RUN \
     && curl -fSL https://github.com/libnice/libnice/archive/0.1.17.tar.gz -o ${BUILD_SRC}/0.1.17.tar.gz \
     && tar xzf ${BUILD_SRC}/0.1.17.tar.gz -C ${BUILD_SRC} \
     && cd ${BUILD_SRC}/libnice-0.1.17 \
-    && ./autogen.sh && ./configure --prefix=/usr \
+    && ./autogen.sh \
+    && ./configure --prefix=/usr \
     && make \
     && make install \
 # build boringssl
