@@ -94,7 +94,9 @@ RUN \
     && curl -fSL https://github.com/libnice/libnice/archive/0.1.17.tar.gz -o ${BUILD_SRC}/0.1.17.tar.gz \
     && tar xzf ${BUILD_SRC}/0.1.17.tar.gz -C ${BUILD_SRC} \
     && cd ${BUILD_SRC}/libnice-0.1.17 \
-    && meson ./ \
+    && ./autogen.sh && ./configure --prefix=/usr \
+    && make \
+    && make install \
 # build boringssl
     && if [ $JANUS_WITH_BORINGSSL = "1" ]; then git clone https://boringssl.googlesource.com/boringssl ${BUILD_SRC}/boringssl \
     && cd ${BUILD_SRC}/boringssl \
