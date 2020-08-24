@@ -41,6 +41,7 @@ ARG JANUS_BUILD_DEPS_DEV="\
     liblua5.3-dev \
     pkg-config \
     libconfig-dev \
+    gtk-doc-tools \
     "
 #    libnice-dev \ # Version 0.1.14 - outdated
 ARG JANUS_BUILD_DEPS_EXT="\
