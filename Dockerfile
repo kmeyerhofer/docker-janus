@@ -33,7 +33,6 @@ ARG JANUS_CONFIG_OPTIONS="\
 ARG JANUS_BUILD_DEPS_DEV="\
     libcurl4-openssl-dev \
     libjansson-dev \
-    libnice-dev \
     libssl-dev \
     libsofia-sip-ua-dev \
     libglib2.0-dev \
@@ -43,6 +42,7 @@ ARG JANUS_BUILD_DEPS_DEV="\
     pkg-config \
     libconfig-dev \
     "
+#    libnice-dev \ # Version 0.1.14 - outdated
 ARG JANUS_BUILD_DEPS_EXT="\
     libavutil-dev \
     libavcodec-dev \
@@ -90,6 +90,11 @@ RUN \
     && ./configure --prefix=/usr --enable-openssl \
     && make shared_library \
     && make install \
+# build libnice
+    && curl -fSL https://github.com/libnice/libnice/archive/0.1.17.tar.gz -o ${BUILD_SRC}/0.1.17.tar.gz \
+    && tar xzf ${BUILD_SRC}/0.1.17.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/libnice-0.1.17 \
+    && meson ./
 # build boringssl
     && if [ $JANUS_WITH_BORINGSSL = "1" ]; then git clone https://boringssl.googlesource.com/boringssl ${BUILD_SRC}/boringssl \
     && cd ${BUILD_SRC}/boringssl \
@@ -166,7 +171,9 @@ RUN \
     && if [ $JANUS_WITH_MQTT = "1" ]; then rm -rf paho.mqtt.c; fi \
     && if [ $JANUS_WITH_RABBITMQ = "1" ]; then rm -rf rabbitmq-c; fi \
     && rm -rf \
+        0.1.17.tar.gz \
         v2.2.0.tar.gz \
+        libnice-0.1.17 \
         libsrtp-2.2.0 \
         janus-gateway \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --auto-remove purge ${JANUS_BUILD_DEPS_EXT} \
