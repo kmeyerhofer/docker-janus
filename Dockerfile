@@ -12,6 +12,11 @@ MAINTAINER brendan jocson <brendan@jocson.eu>
 # docker build environments
 ENV CONFIG_PATH="/opt/janus/etc/janus"
 
+# library versions
+ARG   JANUS_VERSION=0.10.7
+ARG LIBSRTP_VERSION=2.2.0
+ARG LIBNICE_VERSION=0.1.17
+
 # docker build arguments
 ARG BUILD_SRC="/usr/local/src"
 ARG JANUS_WITH_POSTPROCESSING="1"
@@ -85,16 +90,16 @@ RUN \
     && DEBIAN_FRONTEND=noninteractive apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install $JANUS_BUILD_DEPS_DEV ${JANUS_BUILD_DEPS_EXT} \
 # build libsrtp
-    && curl -fSL https://github.com/cisco/libsrtp/archive/v2.2.0.tar.gz -o ${BUILD_SRC}/v2.2.0.tar.gz \
-    && tar xzf ${BUILD_SRC}/v2.2.0.tar.gz -C ${BUILD_SRC} \
-    && cd ${BUILD_SRC}/libsrtp-2.2.0 \
+    && curl -fSL https://github.com/cisco/libsrtp/archive/v${LIBSRTP_VERSION}.tar.gz -o ${BUILD_SRC}/v${LIBSRTP_VERSION}.tar.gz \
+    && tar xzf ${BUILD_SRC}/v${LIBSRTP_VERSION}.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/libsrtp-${LIBSRTP_VERSION} \
     && ./configure --prefix=/usr --enable-openssl \
     && make shared_library \
     && make install \
 # build libnice
-    && curl -fSL https://github.com/libnice/libnice/archive/0.1.17.tar.gz -o ${BUILD_SRC}/0.1.17.tar.gz \
-    && tar xzf ${BUILD_SRC}/0.1.17.tar.gz -C ${BUILD_SRC} \
-    && cd ${BUILD_SRC}/libnice-0.1.17 \
+    && curl -fSL https://github.com/libnice/libnice/archive/${LIBNICE_VERSION}.tar.gz -o ${BUILD_SRC}/${LIBNICE_VERSION}.tar.gz \
+    && tar xzf ${BUILD_SRC}/${LIBNICE_VERSION}.tar.gz -C ${BUILD_SRC} \
+    && cd ${BUILD_SRC}/libnice-${LIBNICE_VERSION} \
     && ./autogen.sh \
     && ./configure --prefix=/usr \
     && make \
@@ -157,7 +162,7 @@ RUN \
     && make install \
     ; fi \
 # build janus-gateway
-    && git clone https://github.com/meetecho/janus-gateway.git ${BUILD_SRC}/janus-gateway \
+    && git clone https://github.com/meetecho/janus-gateway.git#v${JANUS_VERSION} ${BUILD_SRC}/janus-gateway \
     && if [ $JANUS_WITH_FREESWITCH_PATCH = "1" ]; then curl -fSL https://raw.githubusercontent.com/krull/docker-misc/master/init_fs/tmp/janus_sip.c.patch -o ${BUILD_SRC}/janus-gateway/plugins/janus_sip.c.patch && cd ${BUILD_SRC}/janus-gateway/plugins && patch < janus_sip.c.patch; fi \
     && cd ${BUILD_SRC}/janus-gateway \
     && ./autogen.sh \
@@ -175,10 +180,10 @@ RUN \
     && if [ $JANUS_WITH_MQTT = "1" ]; then rm -rf paho.mqtt.c; fi \
     && if [ $JANUS_WITH_RABBITMQ = "1" ]; then rm -rf rabbitmq-c; fi \
     && rm -rf \
-        0.1.17.tar.gz \
-        v2.2.0.tar.gz \
-        libnice-0.1.17 \
-        libsrtp-2.2.0 \
+        ${LIBNICE_VERSION}.tar.gz \
+        v${LIBSRTP_VERSION}.tar.gz \
+        libnice-${LIBNICE_VERSION} \
+        libsrtp-${LIBSRTP_VERSION} \
         janus-gateway \
     && DEBIAN_FRONTEND=noninteractive apt-get -y --auto-remove purge ${JANUS_BUILD_DEPS_EXT} \
     && DEBIAN_FRONTEND=noninteractive apt-get -y clean \
