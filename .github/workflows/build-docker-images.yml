@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build-defaults:
+    name: Build Defaults
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image with default arguments
+      run: docker build . --file Dockerfile
+
+  build-all-enabled:
+    name: Build All Enabled
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image with all arguments enabled
+        run: docker build . --file Dockerfile \
+          --build-arg JANUS_WITH_POSTPROCESSING=1 \
+          --build-arg JANUS_WITH_BORINGSSL=1 \
+          --build-arg JANUS_WITH_DOCS=1 \
+          --build-arg JANUS_WITH_REST=1 \
+          --build-arg JANUS_WITH_DATACHANNELS=1 \
+          --build-arg JANUS_WITH_WEBSOCKETS=1 \
+          --build-arg JANUS_WITH_MQTT=1 \
+          --build-arg JANUS_WITH_PFUNIX=1 \
+          --build-arg JANUS_WITH_RABBITMQ=1 \
+          --build-arg JANUS_WITH_FREESWITCH_PATCH=1
