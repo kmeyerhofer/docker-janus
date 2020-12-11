@@ -22,15 +22,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image with all arguments enabled
-        run: docker build --file Dockerfile \
-          --build-arg JANUS_WITH_POSTPROCESSING=1 \
-          --build-arg JANUS_WITH_BORINGSSL=1 \
-          --build-arg JANUS_WITH_DOCS=1 \
-          --build-arg JANUS_WITH_REST=1 \
-          --build-arg JANUS_WITH_DATACHANNELS=1 \
-          --build-arg JANUS_WITH_WEBSOCKETS=1 \
-          --build-arg JANUS_WITH_MQTT=1 \
-          --build-arg JANUS_WITH_PFUNIX=1 \
-          --build-arg JANUS_WITH_RABBITMQ=1 \
-          --build-arg JANUS_WITH_FREESWITCH_PATCH=1 \
-          .
+        run: |
+          docker build --file Dockerfile \
+            --build-arg JANUS_WITH_POSTPROCESSING=1 \
+            --build-arg JANUS_WITH_BORINGSSL=1 \
+            --build-arg JANUS_WITH_DOCS=1 \
+            --build-arg JANUS_WITH_REST=1 \
+            --build-arg JANUS_WITH_DATACHANNELS=1 \
+            --build-arg JANUS_WITH_WEBSOCKETS=1 \
+            --build-arg JANUS_WITH_MQTT=1 \
+            --build-arg JANUS_WITH_PFUNIX=1 \
+            --build-arg JANUS_WITH_RABBITMQ=1 \
+            --build-arg JANUS_WITH_FREESWITCH_PATCH=1 \
+            .
