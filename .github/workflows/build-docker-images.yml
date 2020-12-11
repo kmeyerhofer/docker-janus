@@ -25,7 +25,7 @@ jobs:
       run: |
         docker build --file Dockerfile \
           --build-arg JANUS_WITH_POSTPROCESSING=1 \
-          --build-arg JANUS_WITH_DOCS=1 \
+          --build-arg JANUS_WITH_DOCS=0 \
           --build-arg JANUS_VERSION=0.10.8 \
           .
 
