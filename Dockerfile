@@ -8,7 +8,7 @@
 FROM debian:buster
 
 # file maintainer author
-LABEL maintainer="kmeyerhofer <k@kcmr.io"
+LABEL maintainer="kmeyerhofer <k@kcmr.io>"
 
 # library versions
 ARG   JANUS_VERSION=0.10.7
