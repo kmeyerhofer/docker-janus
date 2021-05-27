@@ -7,46 +7,72 @@ on:
     branches: [ master ]
 
 jobs:
-  build-defaults:
-    name: Build Defaults
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        janus_version: ["0.10.9", "0.10.10", "0.11.1", "0.11.2"]
+        build_arg_type: ["default", "full"]
+        include:
+          - build_arg_type: "default"
+            build_args: ""
+          - build_arg_type: "full"
+            build_args: "--build-arg JANUS_WITH_POSTPROCESSING=1 \
+              --build-arg JANUS_WITH_BORINGSSL=1 \
+              --build-arg JANUS_WITH_DOCS=1 \
+              --build-arg JANUS_WITH_REST=1 \
+              --build-arg JANUS_WITH_DATACHANNELS=1 \
+              --build-arg JANUS_WITH_WEBSOCKETS=1 \
+              --build-arg JANUS_WITH_MQTT=1 \
+              --build-arg JANUS_WITH_PFUNIX=1 \
+              --build-arg JANUS_WITH_RABBITMQ=1 \
+              --build-arg JANUS_WITH_FREESWITCH_PATCH=1"
+
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image with default arguments
-      # Janus version 0.10.7
-      run: docker build . --file Dockerfile
+    - name: Build docker image with Janus version {{ matrix.janus_version }}
+      run: docker build ${{ matrix.build_args }} . --file Dockerfile
 
-  build-janus-version:
-    name: Build Janus Version 0.10.8
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image with Janus Version 0.10.8
-      run: |
-        docker build --file Dockerfile \
-          --build-arg JANUS_WITH_POSTPROCESSING=1 \
-          --build-arg JANUS_WITH_DOCS=0 \
-          --build-arg JANUS_VERSION=0.10.8 \
-          .
+  # build-defaults:
+  #   name: Build Defaults
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build the Docker image with default arguments
+  #     # Janus version 0.10.7
+  #     run: docker build . --file Dockerfile
+  #
+  # build-janus-version:
+  #   name: Build Janus Version 0.10.8
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build the Docker image with Janus Version 0.10.8
+  #     run: |
+  #       docker build --file Dockerfile \
+  #         --build-arg JANUS_WITH_POSTPROCESSING=1 \
+  #         --build-arg JANUS_WITH_DOCS=0 \
+  #         --build-arg JANUS_VERSION=0.10.8 \
+  #         .
 
-  build-all-enabled:
-    name: Build All Enabled
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build the Docker image with all arguments enabled
-        # Until some of these are needed, pass failed checks
-        continue-on-error: true
-        run: |
-          docker build --file Dockerfile \
-            --build-arg JANUS_WITH_POSTPROCESSING=1 \
-            --build-arg JANUS_WITH_BORINGSSL=1 \
-            --build-arg JANUS_WITH_DOCS=1 \
-            --build-arg JANUS_WITH_REST=1 \
-            --build-arg JANUS_WITH_DATACHANNELS=1 \
-            --build-arg JANUS_WITH_WEBSOCKETS=1 \
-            --build-arg JANUS_WITH_MQTT=1 \
-            --build-arg JANUS_WITH_PFUNIX=1 \
-            --build-arg JANUS_WITH_RABBITMQ=1 \
-            --build-arg JANUS_WITH_FREESWITCH_PATCH=1 \
-            .
+  # build-all-enabled:
+  #   name: Build All Enabled
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Build the Docker image with all arguments enabled
+  #       # Until some of these are needed, pass failed checks
+  #       continue-on-error: true
+  #       run: |
+  #         docker build --file Dockerfile \
+  #           --build-arg JANUS_WITH_POSTPROCESSING=1 \
+  #           --build-arg JANUS_WITH_BORINGSSL=1 \
+  #           --build-arg JANUS_WITH_DOCS=1 \
+  #           --build-arg JANUS_WITH_REST=1 \
+  #           --build-arg JANUS_WITH_DATACHANNELS=1 \
+  #           --build-arg JANUS_WITH_WEBSOCKETS=1 \
+  #           --build-arg JANUS_WITH_MQTT=1 \
+  #           --build-arg JANUS_WITH_PFUNIX=1 \
+  #           --build-arg JANUS_WITH_RABBITMQ=1 \
+  #           --build-arg JANUS_WITH_FREESWITCH_PATCH=1 \
+  #           .
