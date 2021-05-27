@@ -30,7 +30,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build docker image with Janus version {{ matrix.janus_version }}
+    - name: Build docker image with Janus version
+      continue-on-error: true
       run: docker build --build-arg JANUS_VERSION=${{ matrix.janus_version }} ${{ matrix.build_args }} . --file Dockerfile
 
   # build-defaults:
