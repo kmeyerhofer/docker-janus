@@ -109,8 +109,8 @@ RUN set -x && \
     tar xzf ./${LIBNICE_VERSION}.tar.gz -C . && \
     cd ./libnice-${LIBNICE_VERSION} && \
     if [ "${LIBNICE_VERSION}" > "0.1.17" ]; then meson builddir && \
-      sudo ninja -C builddir install && \
-    ; else ./autogen.sh && \
+      sudo ninja -C builddir install; \
+    else ./autogen.sh && \
       ./configure --prefix=/usr && \
       make && \
       make install \
