@@ -44,7 +44,7 @@ ARG JANUS_BUILD_DEPS_DEV="\
     libconfig-dev \
     gtk-doc-tools \
     meson \
-    ninja-build
+    ninja-build \
     "
 #    libnice-dev \ # Version 0.1.14 - outdated
 ARG JANUS_BUILD_DEPS_EXT="\
