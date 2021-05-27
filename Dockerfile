@@ -108,9 +108,9 @@ RUN set -x && \
     curl -fSL https://github.com/libnice/libnice/archive/${LIBNICE_VERSION}.tar.gz -o ./${LIBNICE_VERSION}.tar.gz && \
     tar xzf ./${LIBNICE_VERSION}.tar.gz -C . && \
     cd ./libnice-${LIBNICE_VERSION} && \
-    if [ ${LIBNICE_VERSION} > "0.1.17" ]; then meson builddir && \
+    if [ "${LIBNICE_VERSION}" > "0.1.17" ]; then meson builddir && \
       sudo ninja -C builddir install && \
-    elif [ ${LIBNICE_VERSION} < "0.1.18" ]; then ./autogen.sh && \
+    ; else ./autogen.sh && \
       ./configure --prefix=/usr && \
       make && \
       make install \
