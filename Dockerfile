@@ -43,6 +43,8 @@ ARG JANUS_BUILD_DEPS_DEV="\
     pkg-config \
     libconfig-dev \
     gtk-doc-tools \
+    meson \
+    ninja-build
     "
 #    libnice-dev \ # Version 0.1.14 - outdated
 ARG JANUS_BUILD_DEPS_EXT="\
@@ -106,10 +108,13 @@ RUN set -x && \
     curl -fSL https://github.com/libnice/libnice/archive/${LIBNICE_VERSION}.tar.gz -o ./${LIBNICE_VERSION}.tar.gz && \
     tar xzf ./${LIBNICE_VERSION}.tar.gz -C . && \
     cd ./libnice-${LIBNICE_VERSION} && \
-    ./autogen.sh && \
-    ./configure --prefix=/usr && \
-    make && \
-    make install
+    if [ ${LIBNICE_VERSION} > "0.1.17" ]; then meson builddir && \
+      sudo ninja -C builddir install && \
+    elif [ ${LIBNICE_VERSION} < "0.1.18" ]; then ./autogen.sh && \
+      ./configure --prefix=/usr && \
+      make && \
+      make install \
+    ; fi
 
 # build boringssl
 RUN set -x && \
